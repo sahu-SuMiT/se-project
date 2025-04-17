@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPAS - Authentication</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="app-header">
+            <img src="images/ppas_logo1.png" alt="PPAS Logo" class="app-logo">
+            <h1 class="app-title">Proxy-Proof</h1>
+            <p class="app-subtitle">Attendance System</p>
+        </div>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="user" id="userId" required>
+            </div>
+            <div class="input-group">
+                <input type="password" class="input-field" placeholder="password" id="password" required>
+            </div>
+            <button type="submit" class="auth-button login-button">login</button>
+        </form>
+        <div class="button-group">
+            <button class="auth-button" onclick="window.location.href='register.html'">register</button>
+            <button class="auth-button" onclick="showAdmin()">admin</button>
+        </div>
+        <div class="biometric-options">
+            <button class="biometric-button" onclick="useBiometric('fingerprint')">
+                <div class="icon-fingerprint"></div>
+            </button>
+            <button class="biometric-button" onclick="useBiometric('face')">
+                <div class="icon-face"></div>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Check if already authenticated
+        window.addEventListener('load', () => {
+            if (sessionStorage.getItem('auth')) {
+                window.location.href = 'home.html';
+            }
+        });
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const userId = document.getElementById('userId').value;
+            const password = document.getElementById('password').value;
+
+            // Check for registered user first
+            const registeredUser = JSON.parse(sessionStorage.getItem('registeredUser'));
+            if (registeredUser && userId === registeredUser.studentId && password === registeredUser.password) {
+                sessionStorage.setItem('auth', 'true');
+                sessionStorage.setItem('userId', userId);
+                window.location.href = 'home.html';
+                return;
+            }
+
+            // Demo authentication as fallback
+            if (userId === '2023BCS064' && password === 'demo123') {
+                sessionStorage.setItem('auth', 'true');
+                sessionStorage.setItem('userId', userId);
+                window.location.href = 'home.html';
+            } else {
+                alert('Invalid credentials. Please try again or register.');
+            }
+        }
+
+        function showAdmin() {
+            alert('Admin portal coming soon!');
+        }
+
+        function useBiometric(type) {
+            alert(`${type} authentication coming soon!`);
+        }
+    </script>
+
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #8Bc7ff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color:black;
+        }
+
+        .input-field::placeholder {
+            color: #666;
+            opacity: 0.8;
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .app-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            margin: 0;
+            color: #333;
+        }
+
+        .app-subtitle {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            color: #666;
+        }
+
+        #loginForm {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</body>
+</html> 

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPAS - Reports</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="reports-container">
+        <div class="app-header">
+            <div class="header-left">
+                <img src="images/iiit-logo.png" alt="IIIT Logo" class="app-logo">
+            </div>
+            <h1 class="header-text">Reports</h1>
+        </div>
+
+        <div class="reports-content">
+            <h2 class="month-title">March</h2>
+            
+            <div class="summary-card">
+                <h3 class="summary-title">Attendance Summary</h3>
+                <table class="summary-table">
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Total Days in Month</td>
+                        <td>31</td>
+                    </tr>
+                    <tr>
+                        <td>Working Days</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>Present Days</td>
+                        <td>22</td>
+                    </tr>
+                    <tr>
+                        <td>Absent Days</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Attendance Percentage</td>
+                        <td>84.62%</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="button-group">
+                <button onclick="window.location.href='home.html'" class="nav-button">Home</button>
+                <button onclick="window.location.href='overall-report.html'" class="nav-button">overall Report</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .reports-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #8Bc7ff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .app-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .header-text {
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .month-title {
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+
+        .summary-title {
+            color: #000;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            color: #000;
+        }
+
+        .summary-table th,
+        .summary-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-table th {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            padding: 0.8rem 2rem;
+            background: #d9d9d9;
+            border: none;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: #000;
+        }
+
+        .nav-button:hover {
+            background: #c4c4c4;
+        }
+    </style>
+</body>
+</html> 

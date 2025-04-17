@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPAS - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="home-container">
+        <div class="home-header">
+            <div class="header-left">
+                <img src="images/iiit-logo.png" alt="IIT Logo" class="iit-logo">
+            </div>
+            <h1 class="page-title">Home</h1>
+        </div>
+        <div class="menu-grid">
+            <a href="mark-attendance.html" class="menu-item">
+                <span>mark</span>
+                <span>attendance</span>
+            </a>
+            <a href="lect-schedule.html" class="menu-item">
+                <span>lect</span>
+                <span>schedule</span>
+            </a>
+            <a href="view-reports.html" class="menu-item">
+                <span>view</span>
+                <span>Reports</span>
+            </a>
+            <a href="classes-missed.html" class="menu-item">
+                <span>Classes</span>
+                <span>missed</span>
+            </a>
+            <a href="complain.html" class="menu-item">
+                <span>Complain</span>
+            </a>
+            <a href="apply-leave.html" class="menu-item">
+                <span>Apply</span>
+                <span>Leave</span>
+            </a>
+            <a href="feedback.html" class="menu-item">
+                <span>Feedback</span>
+            </a>
+            <a href="contact.html" class="menu-item">
+                <span>Contact</span>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="logout-container">
+        <button class="logout-button" onclick="handleLogout()">
+            <img src="images/logout_logo.png" alt="Logout" class="logout-icon">
+        </button>
+    </div>
+
+    <script>
+        // Check authentication
+        if (!sessionStorage.getItem('auth')) {
+            window.location.href = 'auth.html';
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('auth');
+            sessionStorage.removeItem('userId');
+            window.location.href = 'auth.html';
+        }
+    </script>
+
+    <style>
+        .logout-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .logout-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            transition: transform 0.2s;
+        }
+
+        .logout-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logout-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</body>
+</html> 

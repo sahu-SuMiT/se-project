@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPAS - Contact Directory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contact-container {
+            width: 95%;
+            max-width: 800px;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: #8Bc7ff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-height: 90vh;
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .app-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .header-text {
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .department-section {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .department-title {
+            color: #000;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #8Bc7ff;
+            font-weight: 600;
+        }
+
+        .contact-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-group-title {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .contact-item {
+            background: #f5f5f5;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-role {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-email {
+            color: #0066cc;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .contact-email:hover {
+            text-decoration: underline;
+        }
+
+        .nav-button {
+            padding: 0.8rem 2rem;
+            background: #d9d9d9;
+            border: none;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: #000;
+            display: block;
+            margin: 2rem auto 0;
+            width: fit-content;
+        }
+
+        .nav-button:hover {
+            background: #c4c4c4;
+        }
+
+        @media (max-width: 600px) {
+            .contact-container {
+                width: 100%;
+                margin: 0;
+                border-radius: 0;
+                padding: 0.5rem;
+            }
+
+            .department-section {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .contact-item {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <div class="app-header">
+            <img src="images/iiit-logo.png" alt="IIIT Logo" class="app-logo">
+            <h1 class="header-text">Contact Directory</h1>
+        </div>
+
+        <div class="department-section">
+            <h2 class="department-title">Administration</h2>
+            <div class="contact-group">
+                <h3 class="contact-group-title">Directors</h3>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. S.N Singh</div>
+                        <div class="contact-role">Director</div>
+                        <a href="mailto:director@iiit.ac.in" class="contact-email">director@iiitm.ac.in</a>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. Priya Singh</div>
+                        <div class="contact-role">Deputy Director</div>
+                        <a href="mailto:deputy.director@iiit.ac.in" class="contact-email">deputy.director@iiit.ac.in</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="department-section">
+            <h2 class="department-title">Finance</h2>
+            <div class="contact-group">
+                <h3 class="contact-group-title">Staffs</h3>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. Ramesh Kumar</div>
+                        <div class="contact-role">Director</div>
+                        <a href="mailto:director@iiit.ac.in" class="contact-email">director@iiit.ac.in</a>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. Priya Singh</div>
+                        <div class="contact-role">Deputy Director</div>
+                        <a href="mailto:deputy.director@iiit.ac.in" class="contact-email">deputy.director@iiit.ac.in</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="department-section">
+            <h2 class="department-title">Computer Science </h2>
+            <div class="contact-group">
+                <h3 class="contact-group-title">Faculty</h3>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. Amit Sharma</div>
+                        <div class="contact-role">Professor - Data Science</div>
+                        <a href="mailto:amit.sharma@iiit.ac.in" class="contact-email">amit.sharma@iiit.ac.in</a>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. Neha Patel</div>
+                        <div class="contact-role">Associate Professor - AI & ML</div>
+                        <a href="mailto:neha.patel@iiit.ac.in" class="contact-email">neha.patel@iiit.ac.in</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="contact-group">
+                <h3 class="contact-group-title">Staff</h3>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-name">Mr. Rajesh Kumar</div>
+                        <div class="contact-role">Lab Administrator</div>
+                        <a href="mailto:rajesh.kumar@iiit.ac.in" class="contact-email">rajesh.kumar@iiit.ac.in</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="department-section">
+            <h2 class="department-title">Electrical & Electronics </h2>
+            <div class="contact-group">
+                <h3 class="contact-group-title">Faculty</h3>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. Suresh Verma</div>
+                        <div class="contact-role">Professor - VLSI Design</div>
+                        <a href="mailto:suresh.verma@iiit.ac.in" class="contact-email">suresh.verma@iiit.ac.in</a>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. Meera Reddy</div>
+                        <div class="contact-role">Associate Professor - Embedded Systems</div>
+                        <a href="mailto:meera.reddy@iiit.ac.in" class="contact-email">meera.reddy@iiit.ac.in</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="contact-group">
+                <h3 class="contact-group-title">Staff</h3>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-name">Mr. Sanjay Patil</div>
+                        <div class="contact-role">Lab Technician</div>
+                        <a href="mailto:sanjay.patil@iiit.ac.in" class="contact-email">sanjay.patil@iiit.ac.in</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="department-section">
+            <h2 class="department-title">Engineering Sciences</h2>
+            <div class="contact-group">
+                <h3 class="contact-group-title">Faculty</h3>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. Anand Gupta</div>
+                        <div class="contact-role">Professor - Applied Mathematics</div>
+                        <a href="mailto:anand.gupta@iiit.ac.in" class="contact-email">anand.gupta@iiit.ac.in</a>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-name">Dr. Kavita Iyer</div>
+                        <div class="contact-role">Associate Professor - Statistics</div>
+                        <a href="mailto:kavita.iyer@iiit.ac.in" class="contact-email">kavita.iyer@iiit.ac.in</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <button onclick="window.location.href='home.html'" class="nav-button">Home</button>
+    </div>
+</body>
+</html>

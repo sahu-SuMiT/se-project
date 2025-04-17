@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2><a href="dashboard.html">Admin Panel</a></h2>
+        <a href="addStudent.html">Add Students</a>
+        <a href="generateReports.html">Generate Reports</a>
+        <a href="manageUserData.html">Manage User Data</a>
+        <a href="info.html">Manage Schedules</a>
+        <a href="monitorSystem.html">Monitor System</a>
+    </div>
+    <div class="content">
+        <h1>ABV-IIITM Gwalior</h1>
+        <div class="header">
+            <h2>Add Student</h2>
+            <p>Add new students to the system</p>
+        </div>
+        <div class="add-student-form">
+            <h3>Add New Student</h3>
+            <form>
+                <label for="student-name">Student Name</label>
+                <input type="text" id="student-name" name="student-name" placeholder="Enter student name" required>
+
+                <label for="student-id">Student ID</label>
+                <input type="text" id="student-id" name="student-id" placeholder="Enter student ID" required>
+
+                <label for="department">Department</label>
+                <select id="department" name="department" required>
+                    <option value="">Select Department</option>
+                    <option value="cse">Computer Science</option>
+                    <option value="it">Information Technology</option>
+                    <option value="ece">Electronics and Communication</option>
+                    <option value="mech">Mechanical Engineering</option>
+                </select>
+
+                <label for="batch">Batch</label>
+                <select id="batch" name="batch" required>
+                    <option value="">Select Batch</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter student email" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter student phone number" required>
+
+                <button type="submit">Add Student</button>
+            </form>
+        </div>
+        <div class="footer">
+            <p>Contact: admin@iiitm.ac.in | Phone: +91-123-456-7890</p>
+        </div>
+    </div>
+</body>
+</html>

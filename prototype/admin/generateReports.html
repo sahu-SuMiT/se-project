@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Reports</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <h2><a href="dashboard.html">Admin Panel</a></h2>
+        <a href="addStudent.html">Add Students</a>
+        <a href="generateReports.html">Generate Reports</a>
+        <a href="manageUserData.html">Manage User Data</a>
+        <a href="info.html">Manage Schedules</a>
+        <a href="monitorSystem.html">Monitor System</a>
+    </div>
+    <div class="content">
+        <h1>ABV-IIITM Gwalior</h1>
+        <div class="header">
+            <h2>Generate Reports</h2>
+            <p>Generate and view various reports and analytics</p>
+        </div>
+        <div class="report-form">
+            <div class="form-group">
+                <label for="reportType">Report Type:</label>
+                <select id="reportType">
+                    <option value="studentGrades">Student Grades Report</option>
+                    <option value="attendance" selected>Attendance Report</option>
+                    <option value="performance">Performance Report</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dateRange">Date Range:</label>
+                <select id="dateRange">
+                    <option value="semester">Current Semester</option>
+                    <option value="year">Current Year</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <select id="department">
+                    <option value="all">All Departments</option>
+                    <option value="cse">CSE</option>
+                    <option value="ece">ECE</option>
+                    <option value="me">ME</option>
+                    <option value="ce">CE</option>
+                    <option value="it">IT</option>
+                </select>
+            </div>
+            <button onclick="generateReport()" class="generate-btn">Generate Report</button>
+        </div>
+        <div class="footer">
+            <p>Contact: admin@iiitm.ac.in | Phone: +91-123-456-7890</p>
+        </div>
+    </div>
+
+    <script>
+        function generateReport() {
+            const reportType = document.getElementById('reportType').value;
+            const dateRange = document.getElementById('dateRange').value;
+            const department = document.getElementById('department').value;
+
+            // Create new jsPDF instance
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add header
+            doc.setFontSize(20);
+            doc.text('ABV-IIITM Gwalior', 105, 20, { align: 'center' });
+            doc.setFontSize(12);
+            doc.text('Report Generated: ' + new Date().toLocaleDateString(), 105, 30, { align: 'center' });
+
+            // Add report details
+            doc.setFontSize(14);
+            doc.text('Report Details:', 20, 40);
+            doc.setFontSize(12);
+            doc.text(`Report Type: ${reportType.charAt(0).toUpperCase() + reportType.slice(1)}`, 20, 50);
+            doc.text(`Date Range: ${dateRange.charAt(0).toUpperCase() + dateRange.slice(1)}`, 20, 60);
+            doc.text(`Department: ${department.toUpperCase()}`, 20, 70);
+
+            // Sample student data
+            const studentData = [
+                {
+                    rollNo: '2023/BCS/001',
+                    name: 'ABITHAY VATS',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '92%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A', marks: 85 },
+                        { name: 'Computer Networks', grade: 'B+', marks: 78 },
+                        { name: 'Database Management', grade: 'A-', marks: 82 },
+                        { name: 'Operating Systems', grade: 'B', marks: 75 },
+                        { name: 'Software Engineering', grade: 'A', marks: 88 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/002',
+                    name: 'ADITYA RAJENDRA MUDHANE',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '88%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A+', marks: 92 },
+                        { name: 'Computer Networks', grade: 'A', marks: 85 },
+                        { name: 'Database Management', grade: 'A+', marks: 95 },
+                        { name: 'Operating Systems', grade: 'A-', marks: 82 },
+                        { name: 'Software Engineering', grade: 'A', marks: 88 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/003',
+                    name: 'AJAY SINGH AKHIL KUMAR',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '85%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'B', marks: 72 },
+                        { name: 'Computer Networks', grade: 'B-', marks: 68 },
+                        { name: 'Database Management', grade: 'B+', marks: 78 },
+                        { name: 'Operating Systems', grade: 'C+', marks: 65 },
+                        { name: 'Software Engineering', grade: 'B', marks: 75 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/004',
+                    name: 'AKSH DHINGBA',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '90%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A', marks: 85 },
+                        { name: 'Computer Networks', grade: 'A-', marks: 82 },
+                        { name: 'Database Management', grade: 'A', marks: 88 },
+                        { name: 'Operating Systems', grade: 'B+', marks: 78 },
+                        { name: 'Software Engineering', grade: 'A-', marks: 82 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/005',
+                    name: 'ANIKET GALANAN CHAWARINA',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '87%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'B+', marks: 78 },
+                        { name: 'Computer Networks', grade: 'B', marks: 75 },
+                        { name: 'Database Management', grade: 'B+', marks: 78 },
+                        { name: 'Operating Systems', grade: 'B', marks: 75 },
+                        { name: 'Software Engineering', grade: 'B+', marks: 78 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/006',
+                    name: 'ANGH PRATAP CHAND',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '93%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A+', marks: 92 },
+                        { name: 'Computer Networks', grade: 'A+', marks: 95 },
+                        { name: 'Database Management', grade: 'A', marks: 88 },
+                        { name: 'Operating Systems', grade: 'A-', marks: 82 },
+                        { name: 'Software Engineering', grade: 'A', marks: 88 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/007',
+                    name: 'ANUKRATI CHATURVEDI',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '91%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A', marks: 85 },
+                        { name: 'Computer Networks', grade: 'A', marks: 85 },
+                        { name: 'Database Management', grade: 'A+', marks: 95 },
+                        { name: 'Operating Systems', grade: 'A-', marks: 82 },
+                        { name: 'Software Engineering', grade: 'A', marks: 88 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/008',
+                    name: 'ANURAD SINON',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '89%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A-', marks: 82 },
+                        { name: 'Computer Networks', grade: 'B+', marks: 78 },
+                        { name: 'Database Management', grade: 'A', marks: 85 },
+                        { name: 'Operating Systems', grade: 'B+', marks: 78 },
+                        { name: 'Software Engineering', grade: 'A-', marks: 82 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/009',
+                    name: 'ARIANT YADAV',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '86%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'B+', marks: 78 },
+                        { name: 'Computer Networks', grade: 'B', marks: 75 },
+                        { name: 'Database Management', grade: 'B+', marks: 78 },
+                        { name: 'Operating Systems', grade: 'B', marks: 75 },
+                        { name: 'Software Engineering', grade: 'B+', marks: 78 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/010',
+                    name: 'ATHARV',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '94%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A+', marks: 95 },
+                        { name: 'Computer Networks', grade: 'A+', marks: 95 },
+                        { name: 'Database Management', grade: 'A+', marks: 95 },
+                        { name: 'Operating Systems', grade: 'A', marks: 88 },
+                        { name: 'Software Engineering', grade: 'A+', marks: 92 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/011',
+                    name: 'SAVNISH SACHIN JALTARE',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '88%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A', marks: 85 },
+                        { name: 'Computer Networks', grade: 'A-', marks: 82 },
+                        { name: 'Database Management', grade: 'A', marks: 88 },
+                        { name: 'Operating Systems', grade: 'B+', marks: 78 },
+                        { name: 'Software Engineering', grade: 'A-', marks: 82 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/012',
+                    name: 'BALAGOWNI JADHESI VENKAT COUD',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '85%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'B+', marks: 78 },
+                        { name: 'Computer Networks', grade: 'B', marks: 75 },
+                        { name: 'Database Management', grade: 'B+', marks: 78 },
+                        { name: 'Operating Systems', grade: 'B', marks: 75 },
+                        { name: 'Software Engineering', grade: 'B+', marks: 78 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/013',
+                    name: 'HUKVA MOURYA VARDIAN RATHOD',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '90%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A', marks: 85 },
+                        { name: 'Computer Networks', grade: 'A-', marks: 82 },
+                        { name: 'Database Management', grade: 'A', marks: 88 },
+                        { name: 'Operating Systems', grade: 'B+', marks: 78 },
+                        { name: 'Software Engineering', grade: 'A-', marks: 82 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/014',
+                    name: 'CHANUKYA PARUCHURE',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '87%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'B+', marks: 78 },
+                        { name: 'Computer Networks', grade: 'B', marks: 75 },
+                        { name: 'Database Management', grade: 'B+', marks: 78 },
+                        { name: 'Operating Systems', grade: 'B', marks: 75 },
+                        { name: 'Software Engineering', grade: 'B+', marks: 78 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/015',
+                    name: 'DERANJAN MAI DESHPANDE AMOGH RAJES',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '92%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A+', marks: 92 },
+                        { name: 'Computer Networks', grade: 'A+', marks: 95 },
+                        { name: 'Database Management', grade: 'A', marks: 88 },
+                        { name: 'Operating Systems', grade: 'A-', marks: 82 },
+                        { name: 'Software Engineering', grade: 'A', marks: 88 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/016',
+                    name: 'RUSHIL CHINTAN JAIN',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '89%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A-', marks: 82 },
+                        { name: 'Computer Networks', grade: 'B+', marks: 78 },
+                        { name: 'Database Management', grade: 'A', marks: 85 },
+                        { name: 'Operating Systems', grade: 'B+', marks: 78 },
+                        { name: 'Software Engineering', grade: 'A-', marks: 82 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/017',
+                    name: 'GUDAYKANTH REDUY',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '86%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'B+', marks: 78 },
+                        { name: 'Computer Networks', grade: 'B', marks: 75 },
+                        { name: 'Database Management', grade: 'B+', marks: 78 },
+                        { name: 'Operating Systems', grade: 'B', marks: 75 },
+                        { name: 'Software Engineering', grade: 'B+', marks: 78 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/018',
+                    name: 'GAURAV DEWAN',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '91%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A', marks: 85 },
+                        { name: 'Computer Networks', grade: 'A', marks: 85 },
+                        { name: 'Database Management', grade: 'A+', marks: 95 },
+                        { name: 'Operating Systems', grade: 'A-', marks: 82 },
+                        { name: 'Software Engineering', grade: 'A', marks: 88 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/019',
+                    name: 'GUDDALA YAXWANTH SAI',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '88%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'A-', marks: 82 },
+                        { name: 'Computer Networks', grade: 'B+', marks: 78 },
+                        { name: 'Database Management', grade: 'A', marks: 85 },
+                        { name: 'Operating Systems', grade: 'B+', marks: 78 },
+                        { name: 'Software Engineering', grade: 'A-', marks: 82 }
+                    ]
+                },
+                {
+                    rollNo: '2023/BCS/020',
+                    name: 'HARSTATEL',
+                    department: 'CSE',
+                    semester: '3rd',
+                    attendance: '85%',
+                    subjects: [
+                        { name: 'Data Structures', grade: 'B+', marks: 78 },
+                        { name: 'Computer Networks', grade: 'B', marks: 75 },
+                        { name: 'Database Management', grade: 'B+', marks: 78 },
+                        { name: 'Operating Systems', grade: 'B', marks: 75 },
+                        { name: 'Software Engineering', grade: 'B+', marks: 78 }
+                    ]
+                }
+            ];
+
+            // Generate report based on type
+            switch(reportType) {
+                case 'studentGrades':
+                    generateStudentGradesReport(doc, studentData);
+                    break;
+                case 'attendance':
+                    generateAttendanceReport(doc, studentData);
+                    break;
+                case 'performance':
+                    generatePerformanceReport(doc, studentData);
+                    break;
+            }
+
+            // Save the PDF
+            doc.save(`${reportType}_report_${new Date().toISOString().split('T')[0]}.pdf`);
+        }
+
+        function generateStudentGradesReport(doc, students) {
+            let currentY = 80;
+
+            students.forEach(student => {
+                // Add student header
+                doc.setFontSize(14);
+                doc.text(`Student: ${student.name}`, 20, currentY);
+                doc.setFontSize(12);
+                doc.text(`Roll No: ${student.rollNo} | Department: ${student.department} | Semester: ${student.semester} | Attendance: ${student.attendance}`, 20, currentY + 10);
+                currentY += 20;
+
+                // Add subjects table
+                const tableData = student.subjects.map(subject => [
+                    subject.name,
+                    subject.marks.toString(),
+                    subject.grade
+                ]);
+
+                doc.autoTable({
+                    startY: currentY,
+                    head: [['Subject', 'Marks', 'Grade']],
+                    body: tableData,
+                    theme: 'grid',
+                    styles: {
+                        fontSize: 10,
+                        cellPadding: 5
+                    },
+                    headStyles: {
+                        fillColor: [0, 86, 179],
+                        textColor: 255,
+                        fontStyle: 'bold'
+                    },
+                    alternateRowStyles: {
+                        fillColor: [245, 245, 245]
+                    }
+                });
+
+                currentY = doc.lastAutoTable.finalY + 20;
+
+                // Add page break if needed
+                if (currentY > 250) {
+                    doc.addPage();
+                    currentY = 20;
+                }
+            });
+        }
+
+        function generateAttendanceReport(doc, students) {
+            // Add attendance summary
+            doc.setFontSize(14);
+            doc.text('Attendance Summary', 20, 80);
+            doc.setFontSize(12);
+
+            const totalStudents = students.length;
+            const attendanceRanges = {
+                '90-100%': 0,
+                '80-89%': 0,
+                '70-79%': 0,
+                'Below 70%': 0
+            };
+
+            students.forEach(student => {
+                const attendance = parseInt(student.attendance);
+                if (attendance >= 90) attendanceRanges['90-100%']++;
+                else if (attendance >= 80) attendanceRanges['80-89%']++;
+                else if (attendance >= 70) attendanceRanges['70-79%']++;
+                else attendanceRanges['Below 70%']++;
+            });
+
+            // Add attendance distribution
+            let currentY = 100;
+            doc.text('Attendance Distribution:', 20, currentY);
+            currentY += 10;
+            Object.entries(attendanceRanges).forEach(([range, count]) => {
+                const percentage = ((count / totalStudents) * 100).toFixed(1);
+                doc.text(`${range}: ${count} students (${percentage}%)`, 30, currentY);
+                currentY += 10;
+            });
+
+            // Add detailed student attendance table
+            currentY += 10;
+            const headers = ['Roll No', 'Name', 'Department', 'Semester', 'Attendance', 'Status'];
+            const data = students.map(student => {
+                const attendance = parseInt(student.attendance);
+                const status = attendance >= 75 ? 'Good' : attendance >= 60 ? 'Warning' : 'Critical';
+                return [
+                    student.rollNo,
+                    student.name,
+                    student.department,
+                    student.semester,
+                    student.attendance,
+                    status
+                ];
+            });
+
+            doc.autoTable({
+                startY: currentY,
+                head: [headers],
+                body: data,
+                theme: 'grid',
+                styles: {
+                    fontSize: 10,
+                    cellPadding: 5
+                },
+                headStyles: {
+                    fillColor: [0, 86, 179],
+                    textColor: 255,
+                    fontStyle: 'bold'
+                },
+                alternateRowStyles: {
+                    fillColor: [245, 245, 245]
+                },
+                columnStyles: {
+                    5: { cellWidth: 30 } // Status column width
+                }
+            });
+        }
+
+        function generatePerformanceReport(doc, students) {
+            const headers = ['Roll No', 'Name', 'Department', 'Semester', 'Average Marks', 'Overall Grade'];
+            const data = students.map(student => {
+                const avgMarks = student.subjects.reduce((sum, subject) => sum + subject.marks, 0) / student.subjects.length;
+                const overallGrade = calculateGrade(avgMarks);
+                return [
+                    student.rollNo,
+                    student.name,
+                    student.department,
+                    student.semester,
+                    avgMarks.toFixed(2),
+                    overallGrade
+                ];
+            });
+
+            doc.autoTable({
+                startY: 80,
+                head: [headers],
+                body: data,
+                theme: 'grid',
+                styles: {
+                    fontSize: 10,
+                    cellPadding: 5
+                },
+                headStyles: {
+                    fillColor: [0, 86, 179],
+                    textColor: 255,
+                    fontStyle: 'bold'
+                },
+                alternateRowStyles: {
+                    fillColor: [245, 245, 245]
+                }
+            });
+        }
+
+        function calculateGrade(marks) {
+            if (marks >= 90) return 'A+';
+            if (marks >= 85) return 'A';
+            if (marks >= 80) return 'A-';
+            if (marks >= 75) return 'B+';
+            if (marks >= 70) return 'B';
+            if (marks >= 65) return 'B-';
+            if (marks >= 60) return 'C+';
+            if (marks >= 55) return 'C';
+            if (marks >= 50) return 'C-';
+            return 'F';
+        }
+    </script>
+</body>
+</html>

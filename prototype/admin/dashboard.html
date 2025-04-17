@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <h2><a href="dashboard.html">Admin Panel</a></h2>
+        <a href="addStudent.html">Add Students</a>
+        <a href="generateReports.html">Generate Reports</a>
+        <a href="manageUserData.html">Manage User Data</a>
+        <a href="info.html">Manage Schedules</a>
+        <a href="monitorSystem.html">Monitor System</a>
+    </div>
+    <div class="content">
+        <h1>ABV-IIITM Gwalior</h1>
+        <div class="info-row">
+            <div class="info-card">
+                <h3>Total Students</h3>
+                <p id="totalStudents">0</p>
+            </div>
+            <div class="info-card">
+                <h3>On Leave</h3>
+                <p id="onLeave">0</p>
+            </div>
+            <div class="info-card">
+                <h3>Remotely</h3>
+                <p id="remotely">0</p>
+            </div>
+            <div class="info-card">
+                <h3>Suspended</h3>
+                <p id="suspended">0</p>
+            </div>
+        </div>
+        <div class="section-row">
+            <div class="section-card">
+                <h3>Attendance Overview</h3>
+                <div class="department-buttons">
+                    <button class="dept-btn active" data-dept="cse">CSE</button>
+                    <button class="dept-btn" data-dept="msc">MSC</button>
+                    <button class="dept-btn" data-dept="imt">IMT</button>
+                    <button class="dept-btn" data-dept="phd">PHD</button>
+                    <button class="dept-btn" data-dept="mba">MBA</button>
+                    <button class="dept-btn" data-dept="eee">EEE</button>
+                </div>
+                <canvas id="attendanceChart"></canvas>
+            </div>
+            <div class="section-card">
+                <h3>Performance Charts</h3>
+                <canvas id="performanceChart"></canvas>
+            </div>
+            <div class="section-card">
+                <h3>Upcoming Holidays</h3>
+                <div id="holidaysList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate real-time data updates
+        function updateNumbers() {
+            const totalStudents = document.getElementById('totalStudents');
+            const onLeave = document.getElementById('onLeave');
+            const remotely = document.getElementById('remotely');
+            const suspended = document.getElementById('suspended');
+
+            // Animate numbers from 0 to target values
+            function animateValue(element, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    element.textContent = Math.floor(progress * (end - start) + start);
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // Update numbers with random variations
+            const baseTotal = 1800;
+            const randomTotal = baseTotal + Math.floor(Math.random() * 50) - 25;
+            const randomLeave = 98 + Math.floor(Math.random() * 20) - 10;
+            const randomRemote = 189 + Math.floor(Math.random() * 30) - 15;
+            const randomSuspended = 45 + Math.floor(Math.random() * 10) - 5;
+
+            animateValue(totalStudents, 0, randomTotal, 2000);
+            animateValue(onLeave, 0, randomLeave, 2000);
+            animateValue(remotely, 0, randomRemote, 2000);
+            animateValue(suspended, 0, randomSuspended, 2000);
+        }
+
+        // Update holidays list
+        function updateHolidays() {
+            const holidays = [
+                { date: '2024-01-01', name: 'New Year' },
+                { date: '2024-01-26', name: 'Republic Day' },
+                { date: '2024-02-14', name: 'Valentine\'s Day' },
+                { date: '2024-03-25', name: 'Holi' },
+                { date: '2024-04-14', name: 'Ambedkar Jayanti' },
+                { date: '2024-04-21', name: 'Eid al-Fitr' },
+                { date: '2024-05-01', name: 'Labour Day' },
+                { date: '2024-08-15', name: 'Independence Day' },
+                { date: '2024-10-02', name: 'Gandhi Jayanti' },
+                { date: '2024-12-25', name: 'Christmas' }
+            ];
+
+            const holidaysList = document.getElementById('holidaysList');
+            holidaysList.innerHTML = holidays.map(holiday => {
+                const date = new Date(holiday.date);
+                const month = date.toLocaleString('default', { month: 'short' });
+                const day = date.getDate();
+                return `
+                    <div class="holiday-item">
+                        <span class="holiday-date">${month} ${day}</span>
+                        <span class="holiday-name">${holiday.name}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Department attendance data
+        const departmentData = {
+            cse: [85, 88, 92, 87, 90, 86],
+            msc: [82, 85, 88, 84, 87, 83],
+            imt: [88, 91, 94, 89, 92, 87],
+            img: [80, 83, 86, 82, 85, 81],
+            phd: [90, 93, 95, 91, 94, 89],
+            mba: [78, 81, 84, 80, 83, 79],
+            eee: [83, 86, 89, 85, 88, 84]
+        };
+
+        let attendanceChart;
+
+        // Create attendance chart
+        function createAttendanceChart() {
+            const ctx = document.getElementById('attendanceChart').getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, 250);
+            gradient.addColorStop(0, 'rgba(75, 192, 192, 0.6)');
+            gradient.addColorStop(1, 'rgba(75, 192, 192, 0.1)');
+
+            attendanceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                    datasets: [{
+                        label: 'Attendance Rate',
+                        data: departmentData.cse,
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: gradient,
+                        tension: 0.4,
+                        fill: true,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Add click event listeners to department buttons
+            document.querySelectorAll('.dept-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.dept-btn').forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Update chart data
+                    const dept = button.dataset.dept;
+                    attendanceChart.data.datasets[0].data = departmentData[dept];
+                    attendanceChart.update();
+                });
+            });
+        }
+
+        // Create performance chart
+        function createPerformanceChart() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            const gradients = [
+                ctx.createLinearGradient(0, 0, 0, 250),
+                ctx.createLinearGradient(0, 0, 0, 250),
+                ctx.createLinearGradient(0, 0, 0, 250),
+                ctx.createLinearGradient(0, 0, 0, 250),
+                ctx.createLinearGradient(0, 0, 0, 250)
+            ];
+
+            // Define gradient colors for each department
+            const gradientColors = [
+                { start: 'rgba(75, 192, 192, 0.8)', end: 'rgba(75, 192, 192, 0.2)' },  // CSE - Teal
+                { start: 'rgba(54, 162, 235, 0.8)', end: 'rgba(54, 162, 235, 0.2)' },  // ECE - Blue
+                { start: 'rgba(255, 159, 64, 0.8)', end: 'rgba(255, 159, 64, 0.2)' },  // ME - Orange
+                { start: 'rgba(153, 102, 255, 0.8)', end: 'rgba(153, 102, 255, 0.2)' }, // CE - Purple
+                { start: 'rgba(255, 99, 132, 0.8)', end: 'rgba(255, 99, 132, 0.2)' }   // IT - Pink
+            ];
+
+            // Create gradients for each bar
+            gradients.forEach((gradient, index) => {
+                gradient.addColorStop(0, gradientColors[index].start);
+                gradient.addColorStop(1, gradientColors[index].end);
+            });
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['CSE', 'ECE', 'ME', 'CE', 'IT'],
+                    datasets: [{
+                        label: 'Average GPA',
+                        data: [8.5, 8.2, 7.8, 8.0, 8.7],
+                        backgroundColor: gradients,
+                        borderRadius: 5,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize everything
+        function init() {
+            updateNumbers();
+            createAttendanceChart();
+            createPerformanceChart();
+            updateHolidays();
+
+            // Update numbers every 30 seconds
+            setInterval(updateNumbers, 30000);
+        }
+
+        // Start when page loads
+        window.onload = init;
+    </script>
+</body>
+</html>

@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Schedules</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2><a href="dashboard.html">Admin Panel</a></h2>
+        <a href="addStudent.html">Add Students</a>
+        <a href="generateReports.html">Generate Reports</a>
+        <a href="manageUserData.html">Manage User Data</a>
+        <a href="info.html">Manage Schedules</a>
+        <a href="monitorSystem.html">Monitor System</a>
+    </div>
+    <div class="content">
+        <h1>ABV-IIITM Gwalior</h1>
+        <div class="header">
+            <h2>Manage Schedules</h2>
+            <p>View and manage academic schedules</p>
+        </div>
+
+        <div class="schedule-container">
+            <!-- Class Schedule Section -->
+            <div class="schedule-section">
+                <div class="section-header">
+                    <h3>Class Schedule</h3>
+                    <button onclick="showAddClassModal()" class="add-btn">Add Class</button>
+                </div>
+                <div class="schedule-filters">
+                    <select id="classDepartmentFilter" onchange="filterClasses()">
+                        <option value="">Select Department</option>
+                        <option value="CSE" selected>CSE</option>
+                        <option value="ECE">ECE</option>
+                        <option value="ME">ME</option>
+                        <option value="CE">CE</option>
+                        <option value="IT">IT</option>
+                    </select>
+                    <select id="classSemesterFilter" onchange="filterClasses()">
+                        <option value="">Select Semester</option>
+                        <option value="1st">1st</option>
+                        <option value="2nd">2nd</option>
+                        <option value="3rd">3rd</option>
+                        <option value="4th" selected>4th</option>
+                    </select>
+                    <button onclick="submitSchedule()" class="submit-btn">Submit Schedule</button>
+                </div>
+                <div class="schedule-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>09:00</th>
+                                <th>10:00</th>
+                                <th>11:00</th>
+                                <th>12:00</th>
+                                <th>13:00</th>
+                                <th>14:00</th>
+                                <th>15:00</th>
+                                <th>16:00</th>
+                                <th>17:00</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="classScheduleBody">
+                            <!-- Class schedule will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Exam Schedule Section -->
+            <div class="schedule-section">
+                <div class="section-header">
+                    <h3>Exam Schedule</h3>
+                    <button onclick="showAddExamModal()" class="add-btn">Add Exam</button>
+                </div>
+                <div class="schedule-filters">
+                    <select id="examDepartmentFilter">
+                        <option value="">All Departments</option>
+                        <option value="CSE">CSE</option>
+                        <option value="ECE">ECE</option>
+                        <option value="ME">ME</option>
+                        <option value="CE">CE</option>
+                        <option value="IT">IT</option>
+                    </select>
+                    <select id="examSemesterFilter">
+                        <option value="">All Semesters</option>
+                        <option value="1st">1st</option>
+                        <option value="2nd">2nd</option>
+                        <option value="3rd">3rd</option>
+                        <option value="4th">4th</option>
+                    </select>
+                    <button onclick="filterExams()" class="search-btn">Filter</button>
+                </div>
+                <div class="schedule-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Subject</th>
+                                <th>Department</th>
+                                <th>Semester</th>
+                                <th>Time</th>
+                                <th>Duration</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="examScheduleBody">
+                            <!-- Exam schedule will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Academic Events Section -->
+            <div class="schedule-section">
+                <div class="section-header">
+                    <h3>Academic Events</h3>
+                    <button onclick="showAddEventModal()" class="add-btn">Add Event</button>
+                </div>
+                <div class="schedule-filters">
+                    <input type="date" id="eventDateFilter">
+                    <button onclick="filterEvents()" class="search-btn">Filter</button>
+                </div>
+                <div class="schedule-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Event Name</th>
+                                <th>Description</th>
+                                <th>Time</th>
+                                <th>Venue</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="academicEventsBody">
+                            <!-- Academic events will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Class Modal -->
+        <div id="addClassModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAddClassModal()">&times;</span>
+                <h2>Add New Class</h2>
+                <form id="addClassForm">
+                    <div class="form-group">
+                        <label for="classSubject">Subject:</label>
+                        <input type="text" id="classSubject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="classProfessor">Professor:</label>
+                        <input type="text" id="classProfessor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="classDepartment">Department:</label>
+                        <select id="classDepartment" required>
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="ME">ME</option>
+                            <option value="CE">CE</option>
+                            <option value="IT">IT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="classSemester">Semester:</label>
+                        <select id="classSemester" required>
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+                            <option value="3rd">3rd</option>
+                            <option value="4th">4th</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="classDay">Day:</label>
+                        <select id="classDay" required>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="classTime">Time:</label>
+                        <input type="time" id="classTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="classDuration">Duration (minutes):</label>
+                        <input type="number" id="classDuration" min="30" max="180" step="30" value="60" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="save-btn">Submit</button>
+                        <button type="button" class="cancel-btn" onclick="closeAddClassModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Exam Modal -->
+        <div id="addExamModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAddExamModal()">&times;</span>
+                <h2>Add New Exam</h2>
+                <form id="addExamForm">
+                    <div class="form-group">
+                        <label for="examSubject">Subject:</label>
+                        <input type="text" id="examSubject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="examDepartment">Department:</label>
+                        <select id="examDepartment" required>
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="ME">ME</option>
+                            <option value="CE">CE</option>
+                            <option value="IT">IT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="examSemester">Semester:</label>
+                        <select id="examSemester" required>
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+                            <option value="3rd">3rd</option>
+                            <option value="4th">4th</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="examDate">Date:</label>
+                        <input type="date" id="examDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="examTime">Time:</label>
+                        <input type="time" id="examTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="examDuration">Duration (minutes):</label>
+                        <input type="number" id="examDuration" min="30" max="480" step="30" value="180" required>
+                    </div>
+                    <button type="submit" class="save-btn">Add Exam</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Event Modal -->
+        <div id="addEventModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAddEventModal()">&times;</span>
+                <h2>Add New Event</h2>
+                <form id="addEventForm">
+                    <div class="form-group">
+                        <label for="eventName">Event Name:</label>
+                        <input type="text" id="eventName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Description:</label>
+                        <textarea id="eventDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Date:</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventTime">Time:</label>
+                        <input type="time" id="eventTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventVenue">Venue:</label>
+                        <input type="text" id="eventVenue" required>
+                    </div>
+                    <button type="submit" class="save-btn">Add Event</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Class Modal -->
+        <div id="editClassModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeEditClassModal()">&times;</span>
+                <h2>Edit Class</h2>
+                <form id="editClassForm">
+                    <input type="hidden" id="editClassId">
+                    <div class="form-group">
+                        <label for="editClassSubject">Subject:</label>
+                        <input type="text" id="editClassSubject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editClassProfessor">Professor:</label>
+                        <input type="text" id="editClassProfessor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editClassDepartment">Department:</label>
+                        <select id="editClassDepartment" required>
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="ME">ME</option>
+                            <option value="CE">CE</option>
+                            <option value="IT">IT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editClassSemester">Semester:</label>
+                        <select id="editClassSemester" required>
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+                            <option value="3rd">3rd</option>
+                            <option value="4th">4th</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editClassDay">Day:</label>
+                        <select id="editClassDay" required>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editClassTime">Time:</label>
+                        <input type="time" id="editClassTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editClassDuration">Duration (minutes):</label>
+                        <input type="number" id="editClassDuration" min="30" max="180" step="30" value="60" required>
+                    </div>
+                    <button type="submit" class="save-btn">Update Class</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Exam Modal -->
+        <div id="editExamModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeEditExamModal()">&times;</span>
+                <h2>Edit Exam</h2>
+                <form id="editExamForm">
+                    <input type="hidden" id="editExamId">
+                    <div class="form-group">
+                        <label for="editExamSubject">Subject:</label>
+                        <input type="text" id="editExamSubject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editExamDepartment">Department:</label>
+                        <select id="editExamDepartment" required>
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="ME">ME</option>
+                            <option value="CE">CE</option>
+                            <option value="IT">IT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editExamSemester">Semester:</label>
+                        <select id="editExamSemester" required>
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+                            <option value="3rd">3rd</option>
+                            <option value="4th">4th</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editExamDate">Date:</label>
+                        <input type="date" id="editExamDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editExamTime">Time:</label>
+                        <input type="time" id="editExamTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editExamDuration">Duration (minutes):</label>
+                        <input type="number" id="editExamDuration" min="30" max="480" step="30" value="180" required>
+                    </div>
+                    <button type="submit" class="save-btn">Update Exam</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Event Modal -->
+        <div id="editEventModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeEditEventModal()">&times;</span>
+                <h2>Edit Event</h2>
+                <form id="editEventForm">
+                    <input type="hidden" id="editEventId">
+                    <div class="form-group">
+                        <label for="editEventName">Event Name:</label>
+                        <input type="text" id="editEventName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventDescription">Description:</label>
+                        <textarea id="editEventDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventDate">Date:</label>
+                        <input type="date" id="editEventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventTime">Time:</label>
+                        <input type="time" id="editEventTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventVenue">Venue:</label>
+                        <input type="text" id="editEventVenue" required>
+                    </div>
+                    <button type="submit" class="save-btn">Update Event</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Contact: admin@iiitm.ac.in | Phone: +91-123-456-7890</p>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        let classSchedule = [
+            {
+                id: 1,
+                subject: "Data Structures",
+                professor: "Dr. S.N.S",
+                department: "CSE",
+                semester: "4th",
+                day: "Monday",
+                time: "09:00",
+                duration: 60
+            },
+            {
+                id: 2,
+                subject: "Computer Networks",
+                professor: "Dr. R.K.S",
+                department: "CSE",
+                semester: "4th",
+                day: "Monday",
+                time: "10:00",
+                duration: 60
+            },
+            {
+                id: 3,
+                subject: "Database Management",
+                professor: "Dr. A.K.M",
+                department: "CSE",
+                semester: "4th",
+                day: "Monday",
+                time: "11:00",
+                duration: 60
+            },
+            {
+                id: 4,
+                subject: "Operating Systems",
+                professor: "Dr. P.K.S",
+                department: "CSE",
+                semester: "4th",
+                day: "Tuesday",
+                time: "09:00",
+                duration: 60
+            },
+            {
+                id: 5,
+                subject: "Software Engineering",
+                professor: "Dr. M.K.R",
+                department: "CSE",
+                semester: "4th",
+                day: "Tuesday",
+                time: "10:00",
+                duration: 60
+            },
+            {
+                id: 6,
+                subject: "Machine Learning",
+                professor: "Dr. S.K.P",
+                department: "CSE",
+                semester: "4th",
+                day: "Tuesday",
+                time: "11:00",
+                duration: 60
+            },
+            {
+                id: 7,
+                subject: "Computer Architecture",
+                professor: "Dr. R.P.S",
+                department: "CSE",
+                semester: "4th",
+                day: "Wednesday",
+                time: "09:00",
+                duration: 60
+            },
+            {
+                id: 8,
+                subject: "Compiler Design",
+                professor: "Dr. A.K.S",
+                department: "CSE",
+                semester: "4th",
+                day: "Wednesday",
+                time: "10:00",
+                duration: 60
+            },
+            {
+                id: 9,
+                subject: "Artificial Intelligence",
+                professor: "Dr. P.R.K",
+                department: "CSE",
+                semester: "4th",
+                day: "Wednesday",
+                time: "11:00",
+                duration: 60
+            },
+            {
+                id: 10,
+                subject: "Web Development",
+                professor: "Dr. M.S.K",
+                department: "CSE",
+                semester: "4th",
+                day: "Thursday",
+                time: "09:00",
+                duration: 60
+            },
+            {
+                id: 11,
+                subject: "Cloud Computing",
+                professor: "Dr. S.R.P",
+                department: "CSE",
+                semester: "4th",
+                day: "Thursday",
+                time: "10:00",
+                duration: 60
+            },
+            {
+                id: 12,
+                subject: "Blockchain Technology",
+                professor: "Dr. R.K.M",
+                department: "CSE",
+                semester: "4th",
+                day: "Thursday",
+                time: "11:00",
+                duration: 60
+            },
+            {
+                id: 13,
+                subject: "Cybersecurity",
+                professor: "Dr. A.P.S",
+                department: "CSE",
+                semester: "4th",
+                day: "Friday",
+                time: "09:00",
+                duration: 60
+            },
+            {
+                id: 14,
+                subject: "Internet of Things",
+                professor: "Dr. P.M.K",
+                department: "CSE",
+                semester: "4th",
+                day: "Friday",
+                time: "10:00",
+                duration: 60
+            },
+            {
+                id: 15,
+                subject: "Deep Learning",
+                professor: "Dr. M.R.S",
+                department: "CSE",
+                semester: "4th",
+                day: "Friday",
+                time: "11:00",
+                duration: 60
+            }
+        ];
+
+        let examSchedule = [
+            {
+                id: 1,
+                subject: "Data Structures",
+                department: "CSE",
+                semester: "3rd",
+                date: "2024-03-15",
+                time: "09:00",
+                duration: 180
+            },
+            {
+                id: 2,
+                subject: "Computer Networks",
+                department: "CSE",
+                semester: "3rd",
+                date: "2024-03-18",
+                time: "09:00",
+                duration: 180
+            }
+        ];
+
+        let academicEvents = [
+            {
+                id: 1,
+                name: "Technical Symposium",
+                description: "Annual technical symposium showcasing student projects",
+                date: "2024-03-20",
+                time: "10:00",
+                venue: "Main Auditorium"
+            },
+            {
+                id: 2,
+                name: "Career Fair",
+                description: "Industry interaction and placement opportunities",
+                date: "2024-03-25",
+                time: "09:00",
+                venue: "Sports Complex"
+            }
+        ];
+
+        // Initialize tables
+        function initializeTables() {
+            displayClassSchedule();
+            displayExamSchedule();
+            displayAcademicEvents();
+        }
+
+        // Display class schedule
+        function displayClassSchedule() {
+            const tbody = document.getElementById('classScheduleBody');
+            tbody.innerHTML = '';
+            
+            const department = document.getElementById('classDepartmentFilter').value;
+            const semester = document.getElementById('classSemesterFilter').value;
+
+            if (!department || !semester) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align: center;">Please select both department and semester to view the schedule</td></tr>';
+                return;
+            }
+
+            // Create time slots (9:00 AM to 5:00 PM)
+            const timeSlots = [];
+            for (let hour = 9; hour <= 17; hour++) {
+                timeSlots.push(`${hour.toString().padStart(2, '0')}:00`);
+            }
+
+            // Create rows for each day
+            ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].forEach(day => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${day}</td>`;
+                
+                // Add cells for each time slot
+                timeSlots.forEach(time => {
+                    const classData = classSchedule.find(c => 
+                        c.department === department && 
+                        c.semester === semester && 
+                        c.day === day && 
+                        c.time === time
+                    );
+                    if (classData) {
+                        row.innerHTML += `
+                            <td>${classData.subject}<br>${classData.professor}</td>
+                        `;
+                    } else {
+                        row.innerHTML += '<td></td>';
+                    }
+                });
+
+                // Add actions cell
+                row.innerHTML += `
+                    <td>
+                        <button onclick="editDaySchedule('${day}', '${department}', '${semester}')" class="edit-btn">Edit</button>
+                        <button onclick="deleteDaySchedule('${day}', '${department}', '${semester}')" class="delete-btn">Delete</button>
+                    </td>
+                `;
+
+                tbody.appendChild(row);
+            });
+        }
+
+        // Display exam schedule
+        function displayExamSchedule() {
+            const tbody = document.getElementById('examScheduleBody');
+            tbody.innerHTML = '';
+            
+            examSchedule.forEach(exam => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${exam.date}</td>
+                    <td>${exam.subject}</td>
+                    <td>${exam.department}</td>
+                    <td>${exam.semester}</td>
+                    <td>${exam.time}</td>
+                    <td>${exam.duration} mins</td>
+                    <td>
+                        <button onclick="editExam(${exam.id})" class="edit-btn">Edit</button>
+                        <button onclick="deleteExam(${exam.id})" class="delete-btn">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Display academic events
+        function displayAcademicEvents() {
+            const tbody = document.getElementById('academicEventsBody');
+            tbody.innerHTML = '';
+            
+            academicEvents.forEach(event => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${event.date}</td>
+                    <td>${event.name}</td>
+                    <td>${event.description}</td>
+                    <td>${event.time}</td>
+                    <td>${event.venue}</td>
+                    <td>
+                        <button onclick="editEvent(${event.id})" class="edit-btn">Edit</button>
+                        <button onclick="deleteEvent(${event.id})" class="delete-btn">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Modal functions
+        function showAddClassModal() {
+            document.getElementById('addClassModal').classList.add('show');
+        }
+
+        function closeAddClassModal() {
+            document.getElementById('addClassModal').classList.remove('show');
+        }
+
+        function showAddExamModal() {
+            document.getElementById('addExamModal').classList.add('show');
+        }
+
+        function closeAddExamModal() {
+            document.getElementById('addExamModal').classList.remove('show');
+        }
+
+        function showAddEventModal() {
+            document.getElementById('addEventModal').classList.add('show');
+        }
+
+        function closeAddEventModal() {
+            document.getElementById('addEventModal').classList.remove('show');
+        }
+
+        // Filter functions
+        function filterClasses() {
+            displayClassSchedule();
+        }
+
+        function filterExams() {
+            const department = document.getElementById('examDepartmentFilter').value;
+            const semester = document.getElementById('examSemesterFilter').value;
+
+            const filteredExams = examSchedule.filter(e => {
+                const matchesDepartment = !department || e.department === department;
+                const matchesSemester = !semester || e.semester === semester;
+                return matchesDepartment && matchesSemester;
+            });
+
+            displayFilteredExamSchedule(filteredExams);
+        }
+
+        function filterEvents() {
+            const date = document.getElementById('eventDateFilter').value;
+            
+            const filteredEvents = academicEvents.filter(e => {
+                return !date || e.date === date;
+            });
+
+            displayFilteredEvents(filteredEvents);
+        }
+
+        // Form submission handlers
+        document.getElementById('addClassForm').onsubmit = function(e) {
+            e.preventDefault();
+            const newClass = {
+                id: classSchedule.length + 1,
+                subject: document.getElementById('classSubject').value,
+                professor: document.getElementById('classProfessor').value,
+                department: document.getElementById('classDepartment').value,
+                semester: document.getElementById('classSemester').value,
+                day: document.getElementById('classDay').value,
+                time: document.getElementById('classTime').value,
+                duration: parseInt(document.getElementById('classDuration').value)
+            };
+            classSchedule.push(newClass);
+            displayClassSchedule();
+            closeAddClassModal();
+            this.reset();
+        };
+
+        document.getElementById('addExamForm').onsubmit = function(e) {
+            e.preventDefault();
+            const newExam = {
+                id: examSchedule.length + 1,
+                subject: document.getElementById('examSubject').value,
+                department: document.getElementById('examDepartment').value,
+                semester: document.getElementById('examSemester').value,
+                date: document.getElementById('examDate').value,
+                time: document.getElementById('examTime').value,
+                duration: parseInt(document.getElementById('examDuration').value)
+            };
+            examSchedule.push(newExam);
+            displayExamSchedule();
+            closeAddExamModal();
+            this.reset();
+        };
+
+        document.getElementById('addEventForm').onsubmit = function(e) {
+            e.preventDefault();
+            const newEvent = {
+                id: academicEvents.length + 1,
+                name: document.getElementById('eventName').value,
+                description: document.getElementById('eventDescription').value,
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                venue: document.getElementById('eventVenue').value
+            };
+            academicEvents.push(newEvent);
+            displayAcademicEvents();
+            closeAddEventModal();
+            this.reset();
+        };
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let modal of modals) {
+                if (event.target == modal) {
+                    modal.classList.remove('show');
+                }
+            }
+        }
+
+        // Edit functions
+        function editClass(time) {
+            const classData = classSchedule.find(c => c.time === time);
+            if (classData) {
+                document.getElementById('editClassId').value = classData.id;
+                document.getElementById('editClassSubject').value = classData.subject;
+                document.getElementById('editClassProfessor').value = classData.professor;
+                document.getElementById('editClassDepartment').value = classData.department;
+                document.getElementById('editClassSemester').value = classData.semester;
+                document.getElementById('editClassDay').value = classData.day;
+                document.getElementById('editClassTime').value = classData.time;
+                document.getElementById('editClassDuration').value = classData.duration;
+                document.getElementById('editClassModal').classList.add('show');
+            }
+        }
+
+        function editExam(id) {
+            const examData = examSchedule.find(e => e.id === id);
+            if (examData) {
+                document.getElementById('editExamId').value = examData.id;
+                document.getElementById('editExamSubject').value = examData.subject;
+                document.getElementById('editExamDepartment').value = examData.department;
+                document.getElementById('editExamSemester').value = examData.semester;
+                document.getElementById('editExamDate').value = examData.date;
+                document.getElementById('editExamTime').value = examData.time;
+                document.getElementById('editExamDuration').value = examData.duration;
+                document.getElementById('editExamModal').classList.add('show');
+            }
+        }
+
+        function editEvent(id) {
+            const eventData = academicEvents.find(e => e.id === id);
+            if (eventData) {
+                document.getElementById('editEventId').value = eventData.id;
+                document.getElementById('editEventName').value = eventData.name;
+                document.getElementById('editEventDescription').value = eventData.description;
+                document.getElementById('editEventDate').value = eventData.date;
+                document.getElementById('editEventTime').value = eventData.time;
+                document.getElementById('editEventVenue').value = eventData.venue;
+                document.getElementById('editEventModal').classList.add('show');
+            }
+        }
+
+        // Close edit modals
+        function closeEditClassModal() {
+            document.getElementById('editClassModal').classList.remove('show');
+        }
+
+        function closeEditExamModal() {
+            document.getElementById('editExamModal').classList.remove('show');
+        }
+
+        function closeEditEventModal() {
+            document.getElementById('editEventModal').classList.remove('show');
+        }
+
+        // Delete functions
+        function deleteClass(time) {
+            if (confirm('Are you sure you want to delete this class?')) {
+                classSchedule = classSchedule.filter(c => c.time !== time);
+                displayClassSchedule();
+            }
+        }
+
+        function deleteExam(id) {
+            if (confirm('Are you sure you want to delete this exam?')) {
+                examSchedule = examSchedule.filter(e => e.id !== id);
+                displayExamSchedule();
+            }
+        }
+
+        function deleteEvent(id) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                academicEvents = academicEvents.filter(e => e.id !== id);
+                displayAcademicEvents();
+            }
+        }
+
+        // Edit form submission handlers
+        document.getElementById('editClassForm').onsubmit = function(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('editClassId').value);
+            const index = classSchedule.findIndex(c => c.id === id);
+            
+            if (index !== -1) {
+                classSchedule[index] = {
+                    id: id,
+                    subject: document.getElementById('editClassSubject').value,
+                    professor: document.getElementById('editClassProfessor').value,
+                    department: document.getElementById('editClassDepartment').value,
+                    semester: document.getElementById('editClassSemester').value,
+                    day: document.getElementById('editClassDay').value,
+                    time: document.getElementById('editClassTime').value,
+                    duration: parseInt(document.getElementById('editClassDuration').value)
+                };
+                displayClassSchedule();
+                closeEditClassModal();
+            }
+        };
+
+        document.getElementById('editExamForm').onsubmit = function(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('editExamId').value);
+            const index = examSchedule.findIndex(e => e.id === id);
+            
+            if (index !== -1) {
+                examSchedule[index] = {
+                    id: id,
+                    subject: document.getElementById('editExamSubject').value,
+                    department: document.getElementById('editExamDepartment').value,
+                    semester: document.getElementById('editExamSemester').value,
+                    date: document.getElementById('editExamDate').value,
+                    time: document.getElementById('editExamTime').value,
+                    duration: parseInt(document.getElementById('editExamDuration').value)
+                };
+                displayExamSchedule();
+                closeEditExamModal();
+            }
+        };
+
+        document.getElementById('editEventForm').onsubmit = function(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('editEventId').value);
+            const index = academicEvents.findIndex(e => e.id === id);
+            
+            if (index !== -1) {
+                academicEvents[index] = {
+                    id: id,
+                    name: document.getElementById('editEventName').value,
+                    description: document.getElementById('editEventDescription').value,
+                    date: document.getElementById('editEventDate').value,
+                    time: document.getElementById('editEventTime').value,
+                    venue: document.getElementById('editEventVenue').value
+                };
+                displayAcademicEvents();
+                closeEditEventModal();
+            }
+        };
+
+        // Edit day schedule
+        function editDaySchedule(day, department, semester) {
+            const dayClasses = classSchedule.filter(c => 
+                c.department === department && 
+                c.semester === semester && 
+                c.day === day
+            );
+
+            if (dayClasses.length > 0) {
+                const firstClass = dayClasses[0];
+                document.getElementById('editClassId').value = firstClass.id;
+                document.getElementById('editClassSubject').value = firstClass.subject;
+                document.getElementById('editClassProfessor').value = firstClass.professor;
+                document.getElementById('editClassDepartment').value = firstClass.department;
+                document.getElementById('editClassSemester').value = firstClass.semester;
+                document.getElementById('editClassDay').value = firstClass.day;
+                document.getElementById('editClassTime').value = firstClass.time;
+                document.getElementById('editClassDuration').value = firstClass.duration;
+                document.getElementById('editClassModal').classList.add('show');
+            }
+        }
+
+        // Delete day schedule
+        function deleteDaySchedule(day, department, semester) {
+            if (confirm(`Are you sure you want to delete all classes for ${day}?`)) {
+                classSchedule = classSchedule.filter(c => 
+                    !(c.department === department && 
+                    c.semester === semester && 
+                    c.day === day)
+                );
+                displayClassSchedule();
+            }
+        }
+
+        // Submit schedule function
+        function submitSchedule() {
+            const department = document.getElementById('classDepartmentFilter').value;
+            const semester = document.getElementById('classSemesterFilter').value;
+
+            if (!department || !semester) {
+                alert('Please select both department and semester');
+                return;
+            }
+
+            // Check if there are any classes for the selected department and semester
+            const hasClasses = classSchedule.some(c => 
+                c.department === department && 
+                c.semester === semester
+            );
+
+            if (!hasClasses) {
+                alert('No classes found for the selected department and semester');
+                return;
+            }
+
+            // Create a summary of the schedule
+            const scheduleSummary = classSchedule
+                .filter(c => c.department === department && c.semester === semester)
+                .map(c => `${c.day} ${c.time}: ${c.subject} (${c.professor})`)
+                .join('\n');
+
+            // Show confirmation with schedule summary
+            if (confirm(`Are you sure you want to submit the following schedule?\n\n${scheduleSummary}`)) {
+                alert('Schedule submitted successfully!');
+                // Here you would typically send the data to a server
+                console.log('Schedule submitted:', {
+                    department,
+                    semester,
+                    classes: classSchedule.filter(c => 
+                        c.department === department && 
+                        c.semester === semester
+                    )
+                });
+            }
+        }
+
+        // Initialize tables when the page loads
+        initializeTables();
+    </script>
+</body>
+</html>
