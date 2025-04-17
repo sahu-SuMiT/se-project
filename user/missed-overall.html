@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPAS - Overall Absences</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .reports-container {
+            width: 95%;
+            max-width: 800px;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: #8Bc7ff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .app-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .header-text {
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .semester-title {
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+
+        .summary-title {
+            color: #000;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-table {
+            width: 100%;
+            min-width: 300px;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            color: #000;
+        }
+
+        .summary-table th,
+        .summary-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            white-space: nowrap;
+        }
+
+        .summary-table th {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            padding: 0.8rem 2rem;
+            background: #d9d9d9;
+            border: none;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: #000;
+        }
+
+        .nav-button:hover {
+            background: #c4c4c4;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        @media (max-width: 600px) {
+            .reports-container {
+                width: 100%;
+                margin: 0;
+                padding: 1rem;
+                border-radius: 0;
+            }
+
+            .summary-card {
+                padding: 0.5rem;
+                border-radius: 4px;
+            }
+
+            .summary-table th,
+            .summary-table td {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .nav-button {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .header-text {
+                font-size: 1.2rem;
+            }
+
+            .semester-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reports-container">
+        <div class="app-header">
+            <div class="header-left">
+                <img src="images/iiit-logo.png" alt="IIIT Logo" class="app-logo">
+            </div>
+            <h1 class="header-text">Overall Absences</h1>
+        </div>
+
+        <div class="reports-content">
+            <h2 class="semester-title">Semester Absences</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Absences</div>
+                    <div class="stat-value">25</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Medical Leaves</div>
+                    <div class="stat-value">5</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Personal Leaves</div>
+                    <div class="stat-value">12</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Holidays</div>
+                    <div class="stat-value">8</div>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <h3 class="summary-title">Course-wise Absences</h3>
+                <table class="summary-table">
+                    <tr>
+                        <th>Course</th>
+                        <th>Total Classes</th>
+                        <th>Absences</th>
+                        <th>Absence %</th>
+                    </tr>
+                    <tr>
+                        <td>CS101</td>
+                        <td>45</td>
+                        <td>3</td>
+                        <td>6.67%</td>
+                    </tr>
+                    <tr>
+                        <td>MATH101</td>
+                        <td>40</td>
+                        <td>5</td>
+                        <td>12.50%</td>
+                    </tr>
+                    <tr>
+                        <td>PHY301</td>
+                        <td>38</td>
+                        <td>6</td>
+                        <td>15.79%</td>
+                    </tr>
+                    <tr>
+                        <td>ENG102</td>
+                        <td>35</td>
+                        <td>5</td>
+                        <td>14.29%</td>
+                    </tr>
+                    <tr>
+                        <td>CHEM201</td>
+                        <td>42</td>
+                        <td>6</td>
+                        <td>14.29%</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="summary-card">
+                <h3 class="summary-title">Monthly Distribution</h3>
+                <table class="summary-table">
+                    <tr>
+                        <th>Month</th>
+                        <th>Medical</th>
+                        <th>Personal</th>
+                        <th>Holiday</th>
+                        <th>Total</th>
+                    </tr>
+                    <tr>
+                        <td>January</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>February</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>March</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>April</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>May</td>
+                        <td>0</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>4</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="button-group">
+                <button onclick="window.location.href='classes-missed.html'" class="nav-button">Monthly View</button>
+                <button onclick="window.location.href='home.html'" class="nav-button">Home</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

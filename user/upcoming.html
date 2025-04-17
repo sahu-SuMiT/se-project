@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPAS - Upcoming Schedule</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="schedule-container">
+        <div class="app-header">
+            <div class="header-left">
+                <img src="images/iiit-logo.png" alt="IIIT Logo" class="app-logo">
+            </div>
+            <h1 class="header-text">upcoming</h1>
+        </div>
+
+        <div class="schedule-content">
+            <div class="date-section">
+                <h2 class="date-title">Monday, March 18</h2>
+                <div class="schedule-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prof.</th>
+                                <th>Course</th>
+                                <th>Time Session</th>
+                                <th>Room</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>RL</td>
+                                <td>ENG102</td>
+                                <td>09:00-10:30</td>
+                                <td>LT-1 006</td>
+                            </tr>
+                            <tr>
+                                <td>JS</td>
+                                <td>CS101</td>
+                                <td>11:00-12:30</td>
+                                <td>LT-2 105</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="date-section">
+                <h2 class="date-title">Tuesday, March 19</h2>
+                <div class="schedule-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prof.</th>
+                                <th>Course</th>
+                                <th>Time Session</th>
+                                <th>Room</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>DB</td>
+                                <td>MATH101</td>
+                                <td>10:00-11:30</td>
+                                <td>LT-1 008</td>
+                            </tr>
+                            <tr>
+                                <td>SG</td>
+                                <td>CS301</td>
+                                <td>14:00-15:30</td>
+                                <td>LT-3 201</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="date-section">
+                <h2 class="date-title">Wednesday, March 20</h2>
+                <div class="schedule-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prof.</th>
+                                <th>Course</th>
+                                <th>Time Session</th>
+                                <th>Room</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>MT</td>
+                                <td>CHEM201</td>
+                                <td>09:30-11:00</td>
+                                <td>LT-2 102</td>
+                            </tr>
+                            <tr>
+                                <td>AB</td>
+                                <td>PHY301</td>
+                                <td>13:00-14:30</td>
+                                <td>LT-1 005</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button onclick="window.location.href='lect-schedule.html'" class="nav-button">Today</button>
+                <button onclick="window.location.href='home.html'" class="nav-button">Home</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .schedule-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #8Bc7ff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .app-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .header-text {
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .date-section {
+            margin-bottom: 2rem;
+        }
+
+        .date-title {
+            color: #000;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .schedule-table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            color: #000;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            padding: 0.8rem 2rem;
+            background: #d9d9d9;
+            border: none;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: #000;
+        }
+
+        .nav-button:hover {
+            background: #c4c4c4;
+        }
+    </style>
+</body>
+</html> 

@@ -1,0 +1,122 @@
+        <div class="dashboard-container">
+            <h2>Department Overview</h2>
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="departmentSelect">Select Department:</label>
+                    <select id="departmentSelect" onchange="updateDashboard()">
+                        <option value="">All Departments</option>
+                        <option value="CSE">CSE</option>
+                        <option value="ECE">ECE</option>
+                        <option value="ME">ME</option>
+                        <option value="CE">CE</option>
+                        <option value="IT">IT</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="semesterSelect">Select Semester:</label>
+                    <select id="semesterSelect" onchange="updateDashboard()">
+                        <option value="">All Semesters</option>
+                        <option value="1st">1st</option>
+                        <option value="2nd">2nd</option>
+                        <option value="3rd">3rd</option>
+                        <option value="4th">4th</option>
+                    </select>
+                </div>
+            </div>
+            <div class="info-row" id="departmentStats">
+                <!-- Department stats will be populated here -->
+            </div>
+        </div>
+
+        <script>
+            // Sample data for department-wise statistics
+            const departmentData = {
+                CSE: {
+                    '1st': { totalStudents: 120, present: 115, absent: 5, average: 85 },
+                    '2nd': { totalStudents: 110, present: 108, absent: 2, average: 88 },
+                    '3rd': { totalStudents: 105, present: 102, absent: 3, average: 82 },
+                    '4th': { totalStudents: 100, present: 98, absent: 2, average: 90 }
+                },
+                ECE: {
+                    '1st': { totalStudents: 100, present: 95, absent: 5, average: 83 },
+                    '2nd': { totalStudents: 95, present: 92, absent: 3, average: 85 },
+                    '3rd': { totalStudents: 90, present: 88, absent: 2, average: 87 },
+                    '4th': { totalStudents: 85, present: 83, absent: 2, average: 89 }
+                },
+                ME: {
+                    '1st': { totalStudents: 90, present: 85, absent: 5, average: 81 },
+                    '2nd': { totalStudents: 85, present: 82, absent: 3, average: 84 },
+                    '3rd': { totalStudents: 80, present: 78, absent: 2, average: 86 },
+                    '4th': { totalStudents: 75, present: 73, absent: 2, average: 88 }
+                },
+                CE: {
+                    '1st': { totalStudents: 85, present: 80, absent: 5, average: 82 },
+                    '2nd': { totalStudents: 80, present: 77, absent: 3, average: 85 },
+                    '3rd': { totalStudents: 75, present: 73, absent: 2, average: 87 },
+                    '4th': { totalStudents: 70, present: 68, absent: 2, average: 89 }
+                },
+                IT: {
+                    '1st': { totalStudents: 95, present: 90, absent: 5, average: 84 },
+                    '2nd': { totalStudents: 90, present: 87, absent: 3, average: 86 },
+                    '3rd': { totalStudents: 85, present: 83, absent: 2, average: 88 },
+                    '4th': { totalStudents: 80, present: 78, absent: 2, average: 90 }
+                }
+            };
+
+            function updateDashboard() {
+                const selectedDepartment = document.getElementById('departmentSelect').value;
+                const selectedSemester = document.getElementById('semesterSelect').value;
+                const statsContainer = document.getElementById('departmentStats');
+                
+                let stats = {
+                    totalStudents: 0,
+                    present: 0,
+                    absent: 0,
+                    average: 0,
+                    count: 0
+                };
+
+                // Calculate statistics based on selection
+                Object.entries(departmentData).forEach(([dept, semData]) => {
+                    if (!selectedDepartment || dept === selectedDepartment) {
+                        Object.entries(semData).forEach(([sem, data]) => {
+                            if (!selectedSemester || sem === selectedSemester) {
+                                stats.totalStudents += data.totalStudents;
+                                stats.present += data.present;
+                                stats.absent += data.absent;
+                                stats.average += data.average;
+                                stats.count++;
+                            }
+                        });
+                    }
+                });
+
+                // Calculate average if there are entries
+                if (stats.count > 0) {
+                    stats.average = Math.round(stats.average / stats.count);
+                }
+
+                // Update the display
+                statsContainer.innerHTML = `
+                    <div class="info-card">
+                        <h3>Total Students</h3>
+                        <p>${stats.totalStudents}</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Present Today</h3>
+                        <p>${stats.present}</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Absent Today</h3>
+                        <p>${stats.absent}</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Average Attendance</h3>
+                        <p>${stats.average}%</p>
+                    </div>
+                `;
+            }
+
+            // Initialize the dashboard
+            updateDashboard();
+        </script> 
