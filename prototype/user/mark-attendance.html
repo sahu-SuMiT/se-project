@@ -206,7 +206,7 @@
                 setTimeout(() => {
                     stopCamera();
                     showSuccess();
-                }, 4000);
+                }, 3000);
             }, 1000);
         }
 
@@ -414,9 +414,10 @@
         }
 
         // Display user ID
-        const userId = sessionStorage.getItem('userId');
+        const userId = sessionStorage.getItem('userId'); 
+        const registeredUser = JSON.parse(sessionStorage.getItem('registeredUser'));
         document.getElementById('userDisplay').textContent = userId;
-        document.getElementById('successUserId').textContent = userId;
+        document.getElementById('successUserId').innerHTML = registeredUser.fullName + `<hr/>` + userId;
 
         function handleFingerprint() {
             // ... existing code ...

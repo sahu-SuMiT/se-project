@@ -60,9 +60,22 @@
                 window.location.href = 'home.html';
                 return;
             }
-
+            
             // Demo authentication as fallback
-            if (userId === '2023BCS064' && password === 'demo123') {
+            if (userId === '2023BCS064' && password === '1234' ||
+                userId === '2023BCS063' && password === '1234' ||
+                userId === '2023BCS081' && password === '1234') {
+                    const userData = {
+                    studentId: userId,
+                    fullName: `Roy Joy`,
+                    department: `CSE`,
+                    semester: `4th`,
+                    password: `1234`,
+                    };
+                    if(userId == '2023BCS064') userData.fullName='Sumit Sahu';
+                    if(userId == '2023BCS063') userData.fullName='Somesh Chandra';
+                    sessionStorage.setItem('registeredUser', JSON.stringify(userData));
+
                 sessionStorage.setItem('auth', 'true');
                 sessionStorage.setItem('userId', userId);
                 window.location.href = 'home.html';
